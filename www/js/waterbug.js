@@ -29,7 +29,7 @@ var dx = 0;
 var image;
 var imageFilename = 'image';
 var currentCopyright;
-var credit = 'Belal Khan/Flickr'
+var credit = 'Belal Khan/Flickr';
 var shallowImage = false;
 
 
@@ -74,7 +74,7 @@ var onDocumentLoad = function(e) {
     $copyrightHolder.on('change', onCopyrightChange);
     $customFilename.on('click', function(e) {
         e.stopPropagation();
-    })
+    });
 
     $("body").on("contextmenu", "canvas", function(e) {
         return false;
@@ -83,7 +83,7 @@ var onDocumentLoad = function(e) {
     $(window).on('resize', resizeCanvas);
     resizeCanvas();
     buildForm();
-}
+};
 
 var resizeCanvas = function() {
     var scale = $('.canvas-cell').width() / canvasWidth;
@@ -95,7 +95,7 @@ var resizeCanvas = function() {
         'transform': 'scale(' + scale + ')'
     });
     renderCanvas();
-}
+};
 
 var buildForm = function() {
     var copyrightKeys = Object.keys(copyrightOptions);
