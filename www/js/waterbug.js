@@ -29,6 +29,7 @@ var dx = 0;
 var image;
 var imageFilename = 'image';
 var currentCopyright;
+var credit = 'Belal Khan/Flickr';
 var shallowImage = false;
 
 
@@ -104,9 +105,8 @@ var buildForm = function() {
         var $logos = $('.logos');
         for (var j = 0; j < logoKeys.length; j++) {
             var key = logoKeys[j];
-            var display = logos[key]['display']
+            var display = logos[key].display;
             $logos.append('<label class="btn btn-primary"><input type="radio" name="logo" id="' + key + '" value="' + key + '">' + display + '</label>');
-            disableLogo();
             if (key === currentLogo) {
                 $('#' + key).attr('checked', true);
                 $('#' + key).parent('.btn').addClass('active');
@@ -212,7 +212,60 @@ var renderCanvas = function() {
         ctx.shadowOffsetY = fontShadowOffsetY;
         ctx.shadowBlur = fontShadowBlur;
     }
+
+    if (currentCopyright) {
+        credit = buildCreditString();
+    }
+
+    var creditWidth = ctx.measureText(credit);
+    ctx.fillText(
+        credit,
+        canvas.width - (creditWidth.width + elementPadding),
+        canvas.height - elementPadding
+    );
 };
+
+/*
+* Build the proper format for the credit based on current copyright
+*/
+var buildCreditString = function() {
+    var creditString;
+    var val = $copyrightHolder.val();
+
+    if ($photographer.val() !== '') {
+        if (copyrightOptions[val].source) {
+            creditString = $photographer.val() + '/' + copyrightOptions[val].source;
+        } else {
+            creditString = $photographer.val() + '/' + $source.val();
+        }
+    } else {
+        if (copyrightOptions[val]['source']) {
+            creditString = copyrightOptions[val]['source'];
+        } else {
+            creditString = $source.val();
+        }
+    }
+
+    if (copyrightOptions[val]['photographerRequired']) {
+        if ($photographer.val() !== '') {
+            $photographer.parents('.form-group').removeClass('has-warning');
+        } else {
+            $photographer.parents('.form-group').addClass('has-warning');
+        }
+    }
+
+    if (copyrightOptions[val]['sourceRequired']) {
+        if ($source.val() !== '') {
+            $source.parents('.form-group').removeClass('has-warning');
+        } else {
+            $source.parents('.form-group').addClass('has-warning');
+        }
+    }
+
+    return creditString;
+};
+
+
 
 /*
 * Handle dragging the image for crops when applicable
@@ -301,9 +354,9 @@ var handleImage = function(e) {
         img.src = image;
         $customFilename.text(imageFilename);
         $customFilename.parents('.form-group').addClass('has-file');
-    }
+    };
     reader.readAsDataURL(e.target.files[0]);
-}
+};
 
 /*
 * Set dragging status based on image aspect ratio and render canvas
@@ -311,37 +364,16 @@ var handleImage = function(e) {
 var onImageLoad = function(e) {
     renderCanvas();
     onCropChange();
-}
+};
 
 /*
 * Load the logo based on radio buttons
 */
 var loadLogo = function() {
-    if (currentLogoColor === 'white') {
-        logo.src = logos[currentLogo]['whitePath'];
-    } else {
-        logo.src = logos[currentLogo]['blackPath'];
-    }
-    disableLogo();
-}
+    logo.src = logos[currentLogo].path;
+};
 
-/*
-* If image paths not defined for the logo, grey it out
-*/
-var disableLogo = function(){
-    var whiteLogo = logos[currentLogo]['whitePath']
-    var blackLogo = logos[currentLogo]['blackPath']
-    if(typeof(whiteLogo) == "undefined"){
-        $("#whiteLogo").parent().addClass("disabled")
-    }else{
-        $("#whiteLogo").parent().removeClass("disabled")
-    }
-    if(typeof(blackLogo) == "undefined"){
-        $("#blackLogo").parent().addClass("disabled")
-    }else{
-        $("#blackLogo").parent().removeClass("disabled")
-    }
-}
+
 
 /*
 * Download the image on save click
@@ -390,7 +422,7 @@ var onLogoColorChange = function(e) {
 
     loadLogo();
     renderCanvas();
-};
+}
 
 /*
 * Handle text color radio button clicks
@@ -398,7 +430,7 @@ var onLogoColorChange = function(e) {
 var onTextColorChange = function(e) {
     currentTextColor = $(this).val();
     renderCanvas();
-};
+}
 
 /*
 * Handle logo radio button clicks
@@ -408,7 +440,7 @@ var onLogoChange = function(e) {
 
     loadLogo();
     renderCanvas();
-};
+}
 
 /*
 * Handle crop radio button clicks
@@ -462,6 +494,31 @@ var onCopyrightChange = function() {
         $source.parents('.form-group').slideUp();
         credit = '';
     }
+
+    // if (currentCopyright === 'npr') {
+    //     $photographer.parents('.form-group').removeClass('required').slideDown();
+    //     $source.parents('.form-group').slideUp();
+    // } else if (currentCopyright === 'freelance') {
+    //     $photographer.parents('.form-group').slideDown();
+    //     $source.parents('.form-group').slideUp();
+    //     $photographer.parents('.form-group').addClass('has-warning required');
+    // } else if (currentCopyright === 'ap' || currentCopyright === 'getty') {
+    //     $photographer.parents('.form-group').removeClass('required').slideDown();
+    //     $source.parents('.form-group')
+    //         .slideUp()
+    //         .removeClass('has-warning required');
+
+    // } else if (currentCopyright === 'third-party') {
+    //     $photographer.parents('.form-group').removeClass('required').slideDown();
+    //     $source.parents('.form-group').slideDown();
+    //     $source.parents('.form-group').addClass('has-warning required');
+    // } else {
+    //     credit = '';
+    //     $photographer.parents('.form-group').slideUp();
+    //     $source.parents('.form-group')
+    //         .slideUp()
+    //         .parents('.form-group').removeClass('has-warning required');
+    // }
     renderCanvas();
 }
 

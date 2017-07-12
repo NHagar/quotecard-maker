@@ -6,22 +6,19 @@ var elementPadding = 40; // padding around the logo and credit text
 // the name of the logo object should match the value of the corresponding radio button in the HTML.
 var logos = {
     'dmn': {
-        whitePath: '../img/dmn.png', // path to white logo
-        blackPath: '../img/dmn.png', // path to black logo
+        path: '../img/dmn.png',
         w: 128, // width of logo
         h: 128, // height of logo
         display: 'DMN'
     },
     'gl': {
-        whitePath: '../img/gl.png', // path to white logo
-        blackPath: '../img/gl.png', // path to black logo
+        path: '../img/gl.png',
         w: 128, // width of logo
         h: 128, // height of logo
         display: 'GuideLive'
     },
     'sports': {
-        whitePath: '../img/sports.png', // path to white logo
-        blackPath: '../img/sports.png', // path to black logo
+        path: '../img/sports.png',
         w: 128, // width of logo
         h: 128, // height of logo
         display: 'SportsDay'
@@ -47,4 +44,4 @@ var currentLogo = 'dmn'; // default logo slug
 var currentLogoColor = 'white'; // default logo color
 var currentTextColor = 'white'; // default text color
 var defaultImage = '../img/test-kitten.jpg'; // path to image to load as test image
-var defaultLogo = logos[currentLogo].whitePath; // path to default logo
+var defaultLogo = logos[currentLogo].path; // path to default logo
