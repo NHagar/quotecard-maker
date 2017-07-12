@@ -5,25 +5,32 @@ var elementPadding = 40; // padding around the logo and credit text
 // logo configuration
 // the name of the logo object should match the value of the corresponding radio button in the HTML.
 var logos = {
-    'lunchbox': {
-        whitePath: '../img/icon-lunchbox-white.svg', // path to white logo
-        blackPath: '../img/icon-lunchbox-black.svg', // path to black logo
-        w: 100, // width of logo
-        h: 80, // height of logo
-        display: 'Lunchbox'
+    'dmn': {
+        whitePath: '../img/dmn.png', // path to white logo
+        blackPath: '../img/dmn.png', // path to black logo
+        w: 128, // width of logo
+        h: 128, // height of logo
+        display: 'DMN'
     },
-    'socializr': {
-        whitePath: '../img/icon-socializr-white.svg',
-        blackPath: '../img/icon-socializr-black.svg',
-        w: 150,
-        h: 51,
-        display: 'Socializr'
-    }
+    'gl': {
+        whitePath: '../img/gl.png', // path to white logo
+        blackPath: '../img/gl.png', // path to black logo
+        w: 128, // width of logo
+        h: 128, // height of logo
+        display: 'GuideLive'
+    },
+    'sports': {
+        whitePath: '../img/sports.png', // path to white logo
+        blackPath: '../img/sports.png', // path to black logo
+        w: 128, // width of logo
+        h: 128, // height of logo
+        display: 'SportsDay'
+    },
 };
 
 // logo opacity for colors
-var whiteLogoAlpha = '0.8';
-var blackLogoAlpha = '0.6';
+var whiteLogoAlpha = '1';
+var blackLogoAlpha = '1';
 
 // type
 var fontWeight = 'normal'; // font weight for credit
@@ -36,8 +43,8 @@ var fontShadowBlur = 10; // font shadow blur
 
 // app load defaults
 var currentCrop = 'twitter'; // default crop size
-var currentLogo = 'lunchbox'; // default logo slug
+var currentLogo = 'dmn'; // default logo slug
 var currentLogoColor = 'white'; // default logo color
 var currentTextColor = 'white'; // default text color
 var defaultImage = '../img/test-kitten.jpg'; // path to image to load as test image
-var defaultLogo = logos[currentLogo]['whitePath'] // path to default logo
+var defaultLogo = logos[currentLogo].whitePath; // path to default logo
