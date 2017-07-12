@@ -34,8 +34,6 @@ var fontShadowOffsetX = 0; // font shadow offset x
 var fontShadowOffsetY = 0; // font shadow offset y
 var fontShadowBlur = 10; // font shadow blur
 
-
-
 // app load defaults
 var currentCrop = 'twitter'; // default crop size
 var currentLogo = 'lunchbox'; // default logo slug

@@ -97,14 +97,7 @@ var resizeCanvas = function() {
 };
 
 var buildForm = function() {
-    var copyrightKeys = Object.keys(copyrightOptions);
     var logoKeys = Object.keys(logos);
-
-    for (var i = 0; i < copyrightKeys.length; i++) {
-        var key = copyrightKeys[i];
-        var display = copyrightOptions[key]['display'];
-        $copyrightHolder.append('<option value="' + key + '">' + display + '</option>');
-    }
 
     if (logoKeys.length > 1) {
         $logosWrapper.append('<div class="btn-group btn-group-justified btn-group-sm logos" data-toggle="buttons"></div>');
@@ -219,18 +212,7 @@ var renderCanvas = function() {
         ctx.shadowOffsetY = fontShadowOffsetY;
         ctx.shadowBlur = fontShadowBlur;
     }
-
-    if (currentCopyright) {
-        credit = buildCreditString();
-    }
-
-    var creditWidth = ctx.measureText(credit);
-    ctx.fillText(
-        credit,
-        canvas.width - (creditWidth.width + elementPadding),
-        canvas.height - elementPadding
-    );
-}
+};
 
 /*
 * Handle dragging the image for crops when applicable
@@ -408,7 +390,7 @@ var onLogoColorChange = function(e) {
 
     loadLogo();
     renderCanvas();
-}
+};
 
 /*
 * Handle text color radio button clicks
@@ -416,7 +398,7 @@ var onLogoColorChange = function(e) {
 var onTextColorChange = function(e) {
     currentTextColor = $(this).val();
     renderCanvas();
-}
+};
 
 /*
 * Handle logo radio button clicks
@@ -426,7 +408,7 @@ var onLogoChange = function(e) {
 
     loadLogo();
     renderCanvas();
-}
+};
 
 /*
 * Handle crop radio button clicks
