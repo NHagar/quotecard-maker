@@ -29,7 +29,6 @@ var dx = 0;
 var image;
 var imageFilename = 'image';
 var currentCopyright;
-var credit = 'Belal Khan/Flickr';
 var shallowImage = false;
 
 
@@ -231,65 +230,6 @@ var renderCanvas = function() {
         canvas.width - (creditWidth.width + elementPadding),
         canvas.height - elementPadding
     );
-
-    validateForm();
-}
-
-/*
-* Build the proper format for the credit based on current copyright
-*/
-var buildCreditString = function() {
-    var creditString;
-    var val = $copyrightHolder.val();
-
-    if ($photographer.val() !== '') {
-        if (copyrightOptions[val]['source']) {
-            creditString = $photographer.val() + '/' + copyrightOptions[val]['source'];
-        } else {
-            creditString = $photographer.val() + '/' + $source.val();
-        }
-    } else {
-        if (copyrightOptions[val]['source']) {
-            creditString = copyrightOptions[val]['source'];
-        } else {
-            creditString = $source.val();
-        }
-    }
-
-    if (copyrightOptions[val]['photographerRequired']) {
-        if ($photographer.val() !== '') {
-            $photographer.parents('.form-group').removeClass('has-warning');
-        } else {
-            $photographer.parents('.form-group').addClass('has-warning');
-        }
-    }
-
-    if (copyrightOptions[val]['sourceRequired']) {
-        if ($source.val() !== '') {
-            $source.parents('.form-group').removeClass('has-warning');
-        } else {
-            $source.parents('.form-group').addClass('has-warning');
-        }
-    }
-
-    return creditString;
-}
-
-
-/*
-* Check to see if any required fields have not been
-* filled out before enabling saving
-*/
-var validateForm = function() {
-    if ($('.has-warning').length === 0 && currentCopyright) {
-        $save.removeAttr('disabled');
-        $("body").off("contextmenu", "canvas");
-    } else {
-        $save.attr('disabled', '');
-        $("body").on("contextmenu", "canvas", function(e) {
-            return false;
-        });
-    }
 }
 
 /*
@@ -540,31 +480,6 @@ var onCopyrightChange = function() {
         $source.parents('.form-group').slideUp();
         credit = '';
     }
-
-    // if (currentCopyright === 'npr') {
-    //     $photographer.parents('.form-group').removeClass('required').slideDown();
-    //     $source.parents('.form-group').slideUp();
-    // } else if (currentCopyright === 'freelance') {
-    //     $photographer.parents('.form-group').slideDown();
-    //     $source.parents('.form-group').slideUp();
-    //     $photographer.parents('.form-group').addClass('has-warning required');
-    // } else if (currentCopyright === 'ap' || currentCopyright === 'getty') {
-    //     $photographer.parents('.form-group').removeClass('required').slideDown();
-    //     $source.parents('.form-group')
-    //         .slideUp()
-    //         .removeClass('has-warning required');
-
-    // } else if (currentCopyright === 'third-party') {
-    //     $photographer.parents('.form-group').removeClass('required').slideDown();
-    //     $source.parents('.form-group').slideDown();
-    //     $source.parents('.form-group').addClass('has-warning required');
-    // } else {
-    //     credit = '';
-    //     $photographer.parents('.form-group').slideUp();
-    //     $source.parents('.form-group')
-    //         .slideUp()
-    //         .parents('.form-group').removeClass('has-warning required');
-    // }
     renderCanvas();
 }
 

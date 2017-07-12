@@ -34,52 +34,7 @@ var fontShadowOffsetX = 0; // font shadow offset x
 var fontShadowOffsetY = 0; // font shadow offset y
 var fontShadowBlur = 10; // font shadow blur
 
-// copyright options
-var orgName = 'Your News Organization';
-var freelanceString = 'for ' + orgName;
 
-var copyrightOptions = {
-    'internal': {
-        showPhotographer: true, // show the photographer input box
-        showSource: false, // show the source input box
-        photographerRequired: false, // require a photographer
-        sourceRequired: false, // require a source
-        source: orgName, // How the source should appear on the image, e.g. 'NPR'
-        display: orgName, // How the option will appear in the dropdown menu   
-    },
-    'freelance': {
-        showPhotographer: true,
-        showSource: false,
-        photographerRequired: true,
-        sourceRequired: false,
-        source: freelanceString,
-        display: 'Freelance' 
-    },
-    'ap': {
-        showPhotographer: true,
-        showSource: false,
-        photographerRequired: false,
-        sourceRequired: false,
-        source: 'AP',
-        display: 'AP' 
-    },
-    'getty': {
-        showPhotographer: true,
-        showSource: false,
-        photographerRequired: false,
-        sourceRequired: false,
-        source: 'Getty Images',
-        display: 'Getty' 
-    },
-    'thirdParty': {
-        showPhotographer: true,
-        showSource: true,
-        photographerRequired: false,
-        sourceRequired: true,
-        source: '',
-        display: 'Third Party/Courtesy' 
-    }
-}
 
 // app load defaults
 var currentCrop = 'twitter'; // default crop size
