@@ -16,6 +16,8 @@ var $fileinput;
 var $customFilename;
 var $quote;
 var $speaker;
+var $quoteSize;
+var $sourceSize;
 
 // Constants
 var IS_MOBILE = Modernizr.touch && Modernizr.mq('screen and max-width(700px)');
@@ -57,6 +59,8 @@ var onDocumentLoad = function(e) {
     $logosWrapper = $('.logos-wrapper');
     $quote = $('input[name="quote"]');
     $speaker = $('input[name="speaker"]');
+    $quoteSize = $('input[name="quoteSize"]');
+    $sourceSize = $('input[name="sourceSize"]');
 
     img.src = defaultImage;
     img.onload = onImageLoad;
@@ -76,6 +80,8 @@ var onDocumentLoad = function(e) {
     });
     $quote.on('keyup', renderCanvas);
     $speaker.on('keyup', renderCanvas);
+    $quoteSize.on('input', renderCanvas);
+    $sourceSize.on('input', renderCanvas);
 
     $("body").on("contextmenu", "canvas", function(e) {
         return false;
@@ -154,7 +160,7 @@ var renderCanvas = function() {
             shallowImage = true;
 
             scaledImageHeight = canvasWidth / imageAspect;
-            scaledImageWidth = canvas.height * (img.width / img.height)
+            scaledImageWidth = canvas.height * (img.width / img.height);
             ctx.drawImage(
                 img,
                 0,
@@ -188,8 +194,8 @@ var renderCanvas = function() {
     ctx.globalAlpha = 1;
     ctx.drawImage(
         logo,
-        elementPadding + 790,
-        currentLogo === 'npr'? elementPadding : elementPadding + 360,
+        canvas.width - 150,
+        canvas.height - 150,
         logos[currentLogo].w,
         logos[currentLogo].h
     );
@@ -199,7 +205,6 @@ var renderCanvas = function() {
 
     // draw the text
     ctx.fillStyle = currentTextColor;
-    ctx.font = fontWeight + ' ' + fontSize + ' ' + fontFace;
 
     if (currentTextColor === 'white') {
         ctx.shadowColor = fontShadow;
@@ -208,19 +213,34 @@ var renderCanvas = function() {
         ctx.shadowBlur = fontShadowBlur;
     }
 
-    var qWidth = 70;
-    var qHeight = 100;
 
-    ctx.fillText(
-        $quote.val(),
-        qWidth,
-        qHeight
-    );
-    ctx.fillText(
-      $speaker.val(),
-      qWidth,
-      qHeight + 40
-    );
+    function drawtext(text, size, x, y, weight, font, baseline, maxWidth) {
+      ctx.font= weight + " " + size + "px " + font;
+      ctx.textBaseline = baseline;
+      var words = text.split(' ');
+      var line = '';
+
+      for(var n = 0; n < words.length; n++) {
+        var testLine = line + words[n] + ' ';
+        var metrics = ctx.measureText(testLine);
+        var testWidth = metrics.width;
+        if (testWidth > maxWidth && n > 0) {
+          ctx.fillText(line, x, y);
+          line = words[n] + ' ';
+          y += size * 1.2;
+        }
+        else {
+          line = testLine;
+        }
+      }
+      ctx.fillText(line, x, y);
+    }
+
+    var qWidth = 70;
+    var qHeight = 60;
+
+    drawtext($quote.val(), $quoteSize.val(), qWidth, qHeight, 'normal', 'arial', 'top', 850);
+    drawtext($speaker.val(), $sourceSize.val(), qWidth, 470, 'oblique', 'arial', 'middle', 1000);
 };
 
 
@@ -420,9 +440,9 @@ var onCopyrightChange = function() {
     $source.parents('.form-group').removeClass('has-warning');
 
     if (copyrightOptions[currentCopyright]) {
-        if (copyrightOptions[currentCopyright]['showPhotographer']) {
+        if (copyrightOptions[currentCopyright].showPhotographer) {
             $photographer.parents('.form-group').slideDown();
-            if (copyrightOptions[currentCopyright]['photographerRequired']) {
+            if (copyrightOptions[currentCopyright].photographerRequired) {
                 $photographer.parents('.form-group').addClass('has-warning required');
             } else {
                 $photographer.parents('.form-group').removeClass('required');
@@ -431,9 +451,9 @@ var onCopyrightChange = function() {
             $photographer.parents('.form-group').slideUp();
         }
 
-        if (copyrightOptions[currentCopyright]['showSource']) {
+        if (copyrightOptions[currentCopyright].showSource) {
             $source.parents('.form-group').slideDown();
-            if (copyrightOptions[currentCopyright]['sourceRequired']) {
+            if (copyrightOptions[currentCopyright].sourceRequired) {
                 $source.parents('.form-group').addClass('has-warning required');
             } else {
                 $source.parents('.form-group').removeClass('required');
@@ -446,31 +466,6 @@ var onCopyrightChange = function() {
         $source.parents('.form-group').slideUp();
         credit = '';
     }
-
-    // if (currentCopyright === 'npr') {
-    //     $photographer.parents('.form-group').removeClass('required').slideDown();
-    //     $source.parents('.form-group').slideUp();
-    // } else if (currentCopyright === 'freelance') {
-    //     $photographer.parents('.form-group').slideDown();
-    //     $source.parents('.form-group').slideUp();
-    //     $photographer.parents('.form-group').addClass('has-warning required');
-    // } else if (currentCopyright === 'ap' || currentCopyright === 'getty') {
-    //     $photographer.parents('.form-group').removeClass('required').slideDown();
-    //     $source.parents('.form-group')
-    //         .slideUp()
-    //         .removeClass('has-warning required');
-
-    // } else if (currentCopyright === 'third-party') {
-    //     $photographer.parents('.form-group').removeClass('required').slideDown();
-    //     $source.parents('.form-group').slideDown();
-    //     $source.parents('.form-group').addClass('has-warning required');
-    // } else {
-    //     credit = '';
-    //     $photographer.parents('.form-group').slideUp();
-    //     $source.parents('.form-group')
-    //         .slideUp()
-    //         .parents('.form-group').removeClass('has-warning required');
-    // }
     renderCanvas();
 };
 
