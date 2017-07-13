@@ -75,6 +75,7 @@ var onDocumentLoad = function(e) {
         e.stopPropagation();
     });
     $quote.on('keyup', renderCanvas);
+    $speaker.on('keyup', renderCanvas);
 
     $("body").on("contextmenu", "canvas", function(e) {
         return false;
@@ -117,7 +118,7 @@ var buildForm = function() {
     } else {
         $logosWrapper.hide();
     }
-}
+};
 
 
 /*
@@ -197,8 +198,6 @@ var renderCanvas = function() {
     ctx.globalAlpha = "1";
 
     // draw the text
-    ctx.textBaseline = 'bottom';
-    ctx.textAlign = 'left';
     ctx.fillStyle = currentTextColor;
     ctx.font = fontWeight + ' ' + fontSize + ' ' + fontFace;
 
@@ -208,47 +207,23 @@ var renderCanvas = function() {
         ctx.shadowOffsetY = fontShadowOffsetY;
         ctx.shadowBlur = fontShadowBlur;
     }
+
+    var qWidth = 70;
+    var qHeight = 100;
+
+    ctx.fillText(
+        $quote.val(),
+        qWidth,
+        qHeight
+    );
+    ctx.fillText(
+      $speaker.val(),
+      qWidth,
+      qHeight + 40
+    );
 };
 
-/*
-* Build the proper format for the credit based on current copyright
-*/
-var buildCreditString = function() {
-    var creditString;
-    var val = $copyrightHolder.val();
 
-    if ($photographer.val() !== '') {
-        if (copyrightOptions[val].source) {
-            creditString = $photographer.val() + '/' + copyrightOptions[val].source;
-        } else {
-            creditString = $photographer.val() + '/' + $source.val();
-        }
-    } else {
-        if (copyrightOptions[val]['source']) {
-            creditString = copyrightOptions[val]['source'];
-        } else {
-            creditString = $source.val();
-        }
-    }
-
-    if (copyrightOptions[val]['photographerRequired']) {
-        if ($photographer.val() !== '') {
-            $photographer.parents('.form-group').removeClass('has-warning');
-        } else {
-            $photographer.parents('.form-group').addClass('has-warning');
-        }
-    }
-
-    if (copyrightOptions[val]['sourceRequired']) {
-        if ($source.val() !== '') {
-            $source.parents('.form-group').removeClass('has-warning');
-        } else {
-            $source.parents('.form-group').addClass('has-warning');
-        }
-    }
-
-    return creditString;
-};
 
 
 
@@ -397,7 +372,7 @@ var onSaveClick = function(e) {
     } else if (link.fireEvent) {
         link.fireEvent("onclick");
     }
-}
+};
 
 
 
@@ -407,7 +382,7 @@ var onSaveClick = function(e) {
 var onTextColorChange = function(e) {
     currentTextColor = $(this).val();
     renderCanvas();
-}
+};
 
 /*
 * Handle logo radio button clicks
@@ -417,7 +392,7 @@ var onLogoChange = function(e) {
 
     loadLogo();
     renderCanvas();
-}
+};
 
 /*
 * Handle crop radio button clicks
@@ -434,7 +409,7 @@ var onCropChange = function() {
         $dragHelp.hide();
     }
     renderCanvas();
-}
+};
 
 /*
 * Show the appropriate fields based on the chosen copyright
@@ -450,7 +425,7 @@ var onCopyrightChange = function() {
             if (copyrightOptions[currentCopyright]['photographerRequired']) {
                 $photographer.parents('.form-group').addClass('has-warning required');
             } else {
-                $photographer.parents('.form-group').removeClass('required')
+                $photographer.parents('.form-group').removeClass('required');
             }
         } else {
             $photographer.parents('.form-group').slideUp();
@@ -461,7 +436,7 @@ var onCopyrightChange = function() {
             if (copyrightOptions[currentCopyright]['sourceRequired']) {
                 $source.parents('.form-group').addClass('has-warning required');
             } else {
-                $source.parents('.form-group').removeClass('required')
+                $source.parents('.form-group').removeClass('required');
             }
         } else {
             $source.parents('.form-group').slideUp();
@@ -497,6 +472,6 @@ var onCopyrightChange = function() {
     //         .parents('.form-group').removeClass('has-warning required');
     // }
     renderCanvas();
-}
+};
 
 $(onDocumentLoad);
