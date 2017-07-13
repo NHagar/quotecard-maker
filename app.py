@@ -33,7 +33,7 @@ def index():
     context['name'] = 'Lunchbox'
     context['id'] = 'home'
     context['now'] = datetime.now().strftime('%B %-d, %Y')
-    return make_response(render_template('index.html', **context))
+    return make_response(render_template('waterbug.html', **context))
 
 @app.route('/factlist/index.html')
 def factlist():

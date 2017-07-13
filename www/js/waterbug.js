@@ -18,6 +18,8 @@ var $quote;
 var $speaker;
 var $quoteSize;
 var $sourceSize;
+var $overlay;
+var $opacity;
 
 // Constants
 var IS_MOBILE = Modernizr.touch && Modernizr.mq('screen and max-width(700px)');
@@ -61,6 +63,8 @@ var onDocumentLoad = function(e) {
     $speaker = $('input[name="speaker"]');
     $quoteSize = $('input[name="quoteSize"]');
     $sourceSize = $('input[name="sourceSize"]');
+    $overlay = $('input[name="overlayColor"]');
+    $opacity = $('input[name="opacity"]');
 
     img.src = defaultImage;
     img.onload = onImageLoad;
@@ -82,6 +86,8 @@ var onDocumentLoad = function(e) {
     $speaker.on('keyup', renderCanvas);
     $quoteSize.on('input', renderCanvas);
     $sourceSize.on('input', renderCanvas);
+    $overlay.on('keyup', renderCanvas);
+    $opacity.on('input', renderCanvas);
 
     $("body").on("contextmenu", "canvas", function(e) {
         return false;
@@ -190,6 +196,10 @@ var renderCanvas = function() {
         }
     }
 
+    ctx.globalAlpha = $opacity.val();
+    ctx.fillStyle = $overlay.val();
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
     // set alpha channel, draw the logo
     ctx.globalAlpha = 1;
     ctx.drawImage(
@@ -240,7 +250,7 @@ var renderCanvas = function() {
     var qHeight = 60;
 
     drawtext($quote.val(), $quoteSize.val(), qWidth, qHeight, 'gweb', 'top', 850);
-    drawtext($speaker.val(), $sourceSize.val(), qWidth, 470, 'gwebi', 'middle', 1000);
+    drawtext($speaker.val(), $sourceSize.val(), qWidth, canvas.height - 70, 'gwebi', 'middle', 1000);
 };
 
 
