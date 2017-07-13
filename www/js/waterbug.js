@@ -14,6 +14,8 @@ var $dragHelp;
 var $filename;
 var $fileinput;
 var $customFilename;
+var $quote;
+var $speaker;
 
 // Constants
 var IS_MOBILE = Modernizr.touch && Modernizr.mq('screen and max-width(700px)');
@@ -53,6 +55,8 @@ var onDocumentLoad = function(e) {
     $fileinput = $('.fileinput');
     $customFilename = $('.custom-filename');
     $logosWrapper = $('.logos-wrapper');
+    $quote = $('input[name="quote"]');
+    $speaker = $('input[name="speaker"]');
 
     img.src = defaultImage;
     img.onload = onImageLoad;
@@ -70,6 +74,7 @@ var onDocumentLoad = function(e) {
     $customFilename.on('click', function(e) {
         e.stopPropagation();
     });
+    $quote.on('keyup', renderCanvas);
 
     $("body").on("contextmenu", "canvas", function(e) {
         return false;
