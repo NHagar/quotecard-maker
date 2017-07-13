@@ -214,8 +214,8 @@ var renderCanvas = function() {
     }
 
 
-    function drawtext(text, size, x, y, weight, font, baseline, maxWidth) {
-      ctx.font= weight + " " + size + "px " + font;
+    function drawtext(text, size, x, y, font, baseline, maxWidth) {
+      ctx.font= size + "px " + font;
       ctx.textBaseline = baseline;
       var words = text.split(' ');
       var line = '';
@@ -239,8 +239,8 @@ var renderCanvas = function() {
     var qWidth = 70;
     var qHeight = 60;
 
-    drawtext($quote.val(), $quoteSize.val(), qWidth, qHeight, 'normal', 'arial', 'top', 850);
-    drawtext($speaker.val(), $sourceSize.val(), qWidth, 470, 'oblique', 'arial', 'middle', 1000);
+    drawtext($quote.val(), $quoteSize.val(), qWidth, qHeight, 'gweb', 'top', 850);
+    drawtext($speaker.val(), $sourceSize.val(), qWidth, 470, 'gwebi', 'middle', 1000);
 };
 
 
