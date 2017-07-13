@@ -5,7 +5,6 @@ var $save;
 var $textColor;
 var $logo;
 var $crop;
-var $logoColor;
 var $imageLoader;
 var $canvas;
 var canvas;
@@ -28,8 +27,6 @@ var dy = 0;
 var dx = 0;
 var image;
 var imageFilename = 'image';
-var currentCopyright;
-var credit = 'Belal Khan/Flickr';
 var shallowImage = false;
 
 
@@ -49,7 +46,6 @@ var onDocumentLoad = function(e) {
     $save = $('.save-btn');
     $textColor = $('input[name="textColor"]');
     $crop = $('input[name="crop"]');
-    $logoColor = $('input[name="logoColor"]');
     $qualityQuestions = $('.quality-question');
     $copyrightHolder = $('.copyright-holder');
     $dragHelp = $('.drag-help');
@@ -68,7 +64,6 @@ var onDocumentLoad = function(e) {
     $imageLoader.on('change', handleImage);
     $save.on('click', onSaveClick);
     $textColor.on('change', onTextColorChange);
-    $logoColor.on('change', onLogoColorChange);
     $crop.on('change', onCropChange);
     $canvas.on('mousedown touchstart', onDrag);
     $copyrightHolder.on('change', onCopyrightChange);
@@ -184,17 +179,13 @@ var renderCanvas = function() {
     }
 
     // set alpha channel, draw the logo
-    if (currentLogoColor === 'white') {
-        ctx.globalAlpha = whiteLogoAlpha;
-    } else {
-        ctx.globalAlpha = blackLogoAlpha;
-    }
+    ctx.globalAlpha = 1;
     ctx.drawImage(
         logo,
-        elementPadding,
-        currentLogo === 'npr'? elementPadding : elementPadding - 14,
-        logos[currentLogo]['w'],
-        logos[currentLogo]['h']
+        elementPadding + 790,
+        currentLogo === 'npr'? elementPadding : elementPadding + 360,
+        logos[currentLogo].w,
+        logos[currentLogo].h
     );
 
     // reset alpha channel so text is not translucent
@@ -212,17 +203,6 @@ var renderCanvas = function() {
         ctx.shadowOffsetY = fontShadowOffsetY;
         ctx.shadowBlur = fontShadowBlur;
     }
-
-    if (currentCopyright) {
-        credit = buildCreditString();
-    }
-
-    var creditWidth = ctx.measureText(credit);
-    ctx.fillText(
-        credit,
-        canvas.width - (creditWidth.width + elementPadding),
-        canvas.height - elementPadding
-    );
 };
 
 /*
@@ -337,7 +317,7 @@ var onDrag = function(e) {
             $(document).off('mouseup.drag touchmove mousemove.drag');
             update(e);
         });
-}
+};
 
 /*
 * Take an image from file input and load it
@@ -414,15 +394,7 @@ var onSaveClick = function(e) {
     }
 }
 
-/*
-* Handle logo radio button clicks
-*/
-var onLogoColorChange = function(e) {
-    currentLogoColor = $(this).val();
 
-    loadLogo();
-    renderCanvas();
-}
 
 /*
 * Handle text color radio button clicks

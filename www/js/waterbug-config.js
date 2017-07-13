@@ -25,9 +25,6 @@ var logos = {
     },
 };
 
-// logo opacity for colors
-var whiteLogoAlpha = '1';
-var blackLogoAlpha = '1';
 
 // type
 var fontWeight = 'normal'; // font weight for credit

@@ -116,7 +116,7 @@ function adjustFontSize(size) {
     $poster.css('font-size', fontSize);
     if ($fontSize.val() !== size){
         $fontSize.val(size);
-    };
+    }
 }
 
 $(function() {
@@ -176,14 +176,6 @@ $(function() {
         var inputText = $(this).val();
         $showCredit.text(inputText);
     });
-
-    // // This event is interfering with the medium editor in some browsers
-    // $('blockquote').on('keyup', function(){
-
-    //     console.log($(this)[0].selectionStart);
-    //     process_text();
-    // });
-
 
     var quoteEl = document.querySelectorAll('.poster blockquote');
     var sourceEl = document.querySelectorAll('.source');
