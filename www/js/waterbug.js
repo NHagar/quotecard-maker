@@ -381,7 +381,7 @@ var onSaveClick = function(e) {
         imageFilename = $customFilename.text();
     }
 
-    link.download =  'waterbug-' + imageFilename + '.png';
+    link.download =  'quotecard-' + imageFilename + '.png';
 
     /// convert canvas content to data-uri for link. When download
     /// attribute is set the content pointed to by link will be
