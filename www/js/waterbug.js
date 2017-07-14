@@ -1,6 +1,7 @@
 // DOM elements
 var $save;
 var $textColor;
+var $font;
 var $logo;
 var $crop;
 var $imageLoader;
@@ -59,6 +60,7 @@ var onDocumentLoad = function(e) {
     $sourceSize = $('input[name="sourceSize"]');
     $overlay = $('input[name="overlayColor"]');
     $opacity = $('input[name="opacity"]');
+    $font = $('input[name="font"]');
 
     img.src = defaultImage;
     img.onload = onImageLoad;
@@ -79,6 +81,7 @@ var onDocumentLoad = function(e) {
     $sourceSize.on('input', renderCanvas);
     $overlay.on('keyup', renderCanvas);
     $opacity.on('input', renderCanvas);
+    $font.on('change', onFontChange);
 
     $("body").on("contextmenu", "canvas", function(e) {
         return false;
@@ -195,8 +198,8 @@ var renderCanvas = function() {
     ctx.globalAlpha = 1;
     ctx.drawImage(
         logo,
-        canvas.width - 150,
-        canvas.height - 150,
+        canvas.width - 130,
+        canvas.height - 130,
         logos[currentLogo].w,
         logos[currentLogo].h
     );
@@ -212,11 +215,11 @@ var renderCanvas = function() {
         ctx.shadowOffsetX = fontShadowOffsetX;
         ctx.shadowOffsetY = fontShadowOffsetY;
         ctx.shadowBlur = fontShadowBlur;
-    }
+    }*/
 
 
-    function drawtext(text, size, x, y, font, baseline, maxWidth) {
-      ctx.font= size + "px " + font;
+    function drawtext(text, size, x, y, f, baseline, maxWidth) {
+      ctx.font= size + "px " + f;
       ctx.textBaseline = baseline;
       var words = text.split(' ');
       var line = '';
@@ -240,8 +243,8 @@ var renderCanvas = function() {
     var qWidth = 70;
     var qHeight = 60;
 
-    drawtext($quote.val(), $quoteSize.val(), qWidth, qHeight, 'gweb', 'top', 850);
-    drawtext($speaker.val(), $sourceSize.val(), qWidth, canvas.height - 70, 'gwebi', 'middle', 1000);
+    drawtext($quote.val(), $quoteSize.val(), qWidth, qHeight, currentFont, 'top', 850);
+    drawtext($speaker.val(), $sourceSize.val(), qWidth, canvas.height - 70, currentFont, 'middle', 1000);
 };
 
 
@@ -405,6 +408,14 @@ var onTextColorChange = function(e) {
 };
 
 /*
+Handle font radio button clicks
+*/
+var onFontChange = function(e) {
+  currentFont = $(this).val();
+  renderCanvas();
+};
+
+/*
 * Handle logo radio button clicks
 */
 var onLogoChange = function(e) {
@@ -485,6 +496,10 @@ $('#urlsubmit').click(function() {
 
   if (isUrlValid(story)) {
     console.log("good url");
+    $.get('/stories?' + $.param({url: story}), function(response) {
+      console.log("request sent");
+      console.log(response);
+    });
   } else {
     console.log("that's not a url");
   }

@@ -7,20 +7,20 @@ var elementPadding = 40; // padding around the logo and credit text
 var logos = {
     'dmn': {
         path: '../img/dmn.png',
-        w: 128, // width of logo
-        h: 128, // height of logo
+        w: 100, // width of logo
+        h: 100, // height of logo
         display: 'DMN'
     },
     'gl': {
         path: '../img/gl.png',
-        w: 128, // width of logo
-        h: 128, // height of logo
+        w: 100, // width of logo
+        h: 100, // height of logo
         display: 'GuideLive'
     },
     'sports': {
         path: '../img/sports.png',
-        w: 128, // width of logo
-        h: 128, // height of logo
+        w: 100, // width of logo
+        h: 100, // height of logo
         display: 'SportsDay'
     },
 };
@@ -40,5 +40,6 @@ var currentCrop = 'twitter'; // default crop size
 var currentLogo = 'dmn'; // default logo slug
 var currentLogoColor = 'white'; // default logo color
 var currentTextColor = 'white'; // default text color
+var currentFont = 'gwebi';
 var defaultImage = '../img/test-kitten.jpg'; // path to image to load as test image
 var defaultLogo = logos[currentLogo].path; // path to default logo

@@ -43,21 +43,51 @@
                         <span class="help">Click to edit name</span>
                     </div>
                 </div>
-                <div class="form-group col-lg-6" id="quote">
-                    <div class="input-group">
-                      <label class="quote">Quote</label>
-                      <input type="text" class="quote" name="quote" value="Quote here!">
-                      <label class="quote">Text size</label>
-                      <input type="range" class="quote" name="quoteSize" value="70">
-                    </div>
+                <div class="row">
+                  <div class="form-group col-lg-6" id="quote">
+                      <div class="input-group">
+                        <label class="quote">Quote</label>
+                        <input type="text" class="quote" name="quote" value="Quote here!">
+                        <label class="quote">Text size</label>
+                        <input type="range" class="quote" name="quoteSize" value="70">
+                      </div>
+                  </div>
+                  <div class="form-group col-lg-6">
+                      <label for="font">Font</label>
+                      <div class="btn-group btn-group-justified btn-group-sm" data-toggle="buttons">
+                        <label class="btn btn-primary">
+                          <input type="radio" name="font" value="gweb">
+                          Serif
+                        </label>
+                        <label class="btn btn-primary active">
+                          <input type="radio" name="font" value="gwebi" checked>
+                          Sans serif
+                        </label>
+                      </div>
+                  </div>
                 </div>
-                <div class="form-group col-lg-6" id="quote">
-                    <div class="input-group">
-                      <label class="quote">Source</label>
-                      <input type="text" class="quote" name="speaker" value="-Who said it?">
-                      <label class="quote">Source size</label>
-                      <input type="range" class="quote" name="sourceSize" value="30">
-                    </div>
+                <div class="row">
+                  <div class="form-group col-lg-6" id="quote">
+                      <div class="input-group">
+                        <label class="quote">Source</label>
+                        <input type="text" class="quote" name="speaker" value="-Who said it?">
+                        <label class="quote">Source size</label>
+                        <input type="range" class="quote" name="sourceSize" value="30">
+                      </div>
+                  </div>
+                  <div class="form-group col-lg-6">
+                      <label for="textColor">Text color</label>
+                      <div class="btn-group btn-group-justified btn-group-sm" data-toggle="buttons">
+                        <label class="btn btn-primary active">
+                          <input type="radio" name="textColor" id="whiteText" value="white" checked>
+                          White
+                        </label>
+                        <label class="btn btn-primary">
+                          <input type="radio" name="textColor" id="blackText" value="black">
+                          Black
+                        </label>
+                      </div>
+                  </div>
                 </div>
                 <div class="row">
                     <div class="form-group col-lg-6">
@@ -80,19 +110,6 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="form-group col-lg-6">
-                        <label for="textColor">Text color</label>
-                        <div class="btn-group btn-group-justified btn-group-sm" data-toggle="buttons">
-                          <label class="btn btn-primary active">
-                            <input type="radio" name="textColor" id="whiteText" value="white" checked>
-                            White
-                          </label>
-                          <label class="btn btn-primary">
-                            <input type="radio" name="textColor" id="blackText" value="black">
-                            Black
-                          </label>
-                        </div>
-                    </div>
                     <div class="form-group col-lg-6">
                       <div class="input-group">
                         <label>Overlay color</label>
