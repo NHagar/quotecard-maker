@@ -207,7 +207,7 @@ var renderCanvas = function() {
     // draw the text
     ctx.fillStyle = currentTextColor;
 
-    if (currentTextColor === 'white') {
+    /*if (currentTextColor === 'white') {
         ctx.shadowColor = fontShadow;
         ctx.shadowOffsetX = fontShadowOffsetX;
         ctx.shadowOffsetY = fontShadowOffsetY;
@@ -481,7 +481,9 @@ function isUrlValid(userInput) {
 }
 
 $('#urlsubmit').click(function() {
-  if (isUrlValid($('input[name="link"]').val())) {
+  var story = $('input[name="link"]').val();
+
+  if (isUrlValid(story)) {
     console.log("good url");
   } else {
     console.log("that's not a url");
