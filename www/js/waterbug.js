@@ -1,6 +1,4 @@
 // DOM elements
-var $source;
-var $photographer;
 var $save;
 var $textColor;
 var $logo;
@@ -9,7 +7,6 @@ var $imageLoader;
 var $canvas;
 var canvas;
 var $qualityQuestions;
-var $copyrightHolder;
 var $dragHelp;
 var $filename;
 var $fileinput;
@@ -43,8 +40,6 @@ var logo = new Image();
 
 
 var onDocumentLoad = function(e) {
-    $source = $('#source');
-    $photographer = $('#photographer');
     $canvas = $('#imageCanvas');
     canvas = $canvas[0];
     $imageLoader = $('#imageLoader');
@@ -53,7 +48,6 @@ var onDocumentLoad = function(e) {
     $textColor = $('input[name="textColor"]');
     $crop = $('input[name="crop"]');
     $qualityQuestions = $('.quality-question');
-    $copyrightHolder = $('.copyright-holder');
     $dragHelp = $('.drag-help');
     $filename = $('.fileinput-filename');
     $fileinput = $('.fileinput');
@@ -71,14 +65,11 @@ var onDocumentLoad = function(e) {
     logo.src = defaultLogo;
     logo.onload = renderCanvas;
 
-    $photographer.on('keyup', renderCanvas);
-    $source.on('keyup', renderCanvas);
     $imageLoader.on('change', handleImage);
     $save.on('click', onSaveClick);
     $textColor.on('change', onTextColorChange);
     $crop.on('change', onCropChange);
     $canvas.on('mousedown touchstart', onDrag);
-    $copyrightHolder.on('change', onCopyrightChange);
     $customFilename.on('click', function(e) {
         e.stopPropagation();
     });
@@ -372,8 +363,7 @@ var onSaveClick = function(e) {
     e.preventDefault();
 
     /// create an "off-screen" anchor tag
-    var link = document.createElement('a'),
-        e;
+    var link = document.createElement('a');
 
 
     /// the key here is to set the download attribute of the a tag
@@ -480,3 +470,8 @@ var onCopyrightChange = function() {
 };
 
 $(onDocumentLoad);
+
+
+$('#urlsubmit').click(function() {
+  console.log($('input[name="link"]').val());
+});

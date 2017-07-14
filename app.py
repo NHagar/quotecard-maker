@@ -10,7 +10,6 @@ App Template for static publishing.
 from datetime import datetime
 
 import app_config
-import json
 import static
 
 from flask import Flask, make_response, render_template
