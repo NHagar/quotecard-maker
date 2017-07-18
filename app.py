@@ -9,6 +9,7 @@ App Template for static publishing.
 
 from datetime import datetime
 
+import base64
 import requests
 import app_config
 import static
@@ -50,9 +51,10 @@ def stories():
     if 'sportsday' in story:
         img = img=tree.xpath('//img[@class="article-content__figure__img gl-full gm-full gs-full  new-line lazyload"]/@data-srcset')[0].split('?')[0]
     elif 'guidelive' in story:
-        img=tree.xpath('//figure[@class="card__figure figure"]/img/@srcset')[0].split('?')[0]
+        img = tree.xpath('//figure[@class="card__figure figure"]/img/@srcset')[0].split('?')[0]
     else:
         img = tree.xpath('//picture[@class="art-banner__picture"]/source/@srcset')[0].split('?')[0]
+    img = base64.b64encode(requests.get(img).content)
     return img
 
 app.register_blueprint(static.static)

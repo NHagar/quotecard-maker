@@ -342,6 +342,7 @@ var handleImage = function(e) {
     reader.readAsDataURL(e.target.files[0]);
 };
 
+
 /*
 * Set dragging status based on image aspect ratio and render canvas
 */
@@ -499,6 +500,9 @@ $('#urlsubmit').click(function() {
     $.get('/stories?' + $.param({url: story}), function(response) {
       console.log("request sent");
       console.log(response);
+      dy = 0;
+      dx = 0;
+      img.src = 'data:image/jpeg;base64,' + response;
     });
   } else {
     console.log("that's not a url");
