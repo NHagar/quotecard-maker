@@ -43,3 +43,4 @@ var currentTextColor = 'white'; // default text color
 var currentFont = 'gwebi';
 var defaultImage = '../img/test-kitten.jpg'; // path to image to load as test image
 var defaultLogo = logos[currentLogo].path; // path to default logo
+var currentAlign = '70x60xstartxtop';

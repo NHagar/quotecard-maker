@@ -18,6 +18,7 @@ var $quoteSize;
 var $sourceSize;
 var $overlay;
 var $opacity;
+var $align;
 
 // Constants
 var IS_MOBILE = Modernizr.touch && Modernizr.mq('screen and max-width(700px)');
@@ -61,6 +62,7 @@ var onDocumentLoad = function(e) {
     $overlay = $('input[name="overlayColor"]');
     $opacity = $('input[name="opacity"]');
     $font = $('input[name="font"]');
+    $align = $('select[name="align"]');
 
     img.src = defaultImage;
     img.onload = onImageLoad;
@@ -82,6 +84,7 @@ var onDocumentLoad = function(e) {
     $overlay.on('keyup', renderCanvas);
     $opacity.on('input', renderCanvas);
     $font.on('change', onFontChange);
+    $align.on('change', onAlignChange);
 
     $("body").on("contextmenu", "canvas", function(e) {
         return false;
@@ -218,9 +221,11 @@ var renderCanvas = function() {
     }*/
 
 
-    function drawtext(text, size, x, y, f, baseline, maxWidth) {
-      ctx.font= size + "px " + f;
+    function drawtext(text, size, x, y, f, baseline, maxWidth, align) {
+      console.log(baseline, x, y);
       ctx.textBaseline = baseline;
+      ctx.font = size + "px " + f;
+      ctx.textAlign = align;
       var words = text.split(' ');
       var line = '';
 
@@ -232,19 +237,22 @@ var renderCanvas = function() {
           ctx.fillText(line, x, y);
           line = words[n] + ' ';
           y += size * 1.2;
-        }
-        else {
+        } else {
           line = testLine;
         }
       }
       ctx.fillText(line, x, y);
     }
 
-    var qWidth = 70;
-    var qHeight = 60;
+    var dimensions = currentAlign.split('x');
+    var width = parseInt(dimensions[0]);
+    var height = eval(dimensions[1]);
+    var align = dimensions[2];
+    var baseline = dimensions[3];
+    qWidth = 70;
 
-    drawtext($quote.val(), $quoteSize.val(), qWidth, qHeight, currentFont, 'top', 850);
-    drawtext($speaker.val(), $sourceSize.val(), qWidth, canvas.height - 70, currentFont, 'middle', 1000);
+    drawtext($quote.val(), $quoteSize.val(), width, parseInt(height), currentFont, baseline, 850, align);
+    drawtext($speaker.val(), $sourceSize.val(), qWidth, canvas.height - 70, currentFont, 'middle', 1000, 'start');
 };
 
 
@@ -416,6 +424,11 @@ var onFontChange = function(e) {
   renderCanvas();
 };
 
+var onAlignChange = function(e) {
+  currentAlign = $(this).val();
+  renderCanvas();
+};
+
 /*
 * Handle logo radio button clicks
 */
@@ -492,6 +505,7 @@ function isUrlValid(userInput) {
         return true;
 }
 
+//Pull story image from url
 $('#urlsubmit').click(function() {
   var story = $('input[name="link"]').val();
 
