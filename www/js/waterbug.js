@@ -547,15 +547,12 @@ $('#urlsubmit').click(function() {
   var story = $('input[name="link"]').val();
 
   if (isUrlValid(story)) {
-    console.log("good url");
     $.get('/stories?' + $.param({url: story}), function(response) {
-      console.log("request sent");
-      console.log(response);
       dy = 0;
       dx = 0;
       img.src = 'data:image/jpeg;base64,' + response;
     });
   } else {
-    console.log("that's not a url");
+    alert("That's not a url.");
   }
 });
