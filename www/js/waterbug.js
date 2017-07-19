@@ -229,6 +229,7 @@ var renderCanvas = function() {
       var line = '';
       var lines = [];
 
+      // Determine line draws for different alignments
       for(var n = 0; n < words.length; n++) {
         var testLine = line + words[n] + ' ';
         var metrics = ctx.measureText(testLine);
