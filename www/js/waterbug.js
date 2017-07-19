@@ -222,26 +222,46 @@ var renderCanvas = function() {
 
 
     function drawtext(text, size, x, y, f, baseline, maxWidth, align) {
-      console.log(baseline, x, y);
       ctx.textBaseline = baseline;
       ctx.font = size + "px " + f;
       ctx.textAlign = align;
       var words = text.split(' ');
       var line = '';
+      var lines = [];
 
       for(var n = 0; n < words.length; n++) {
         var testLine = line + words[n] + ' ';
         var metrics = ctx.measureText(testLine);
         var testWidth = metrics.width;
         if (testWidth > maxWidth && n > 0) {
-          ctx.fillText(line, x, y);
-          line = words[n] + ' ';
-          y += size * 1.2;
+          if (baseline === 'bottom' || baseline === 'middle') {
+            lines.push(line);
+            line = words[n] + ' ';
+          } else {
+            ctx.fillText(line, x, y);
+            line = words[n] + ' ';
+            y += size * 1.2;
+          }
         } else {
           line = testLine;
         }
       }
-      ctx.fillText(line, x, y);
+      if (baseline === 'top') {
+        ctx.fillText(line, x, y);
+      } else if (baseline === 'bottom') {
+        ctx.fillText(line, x, y);
+        for (var c = 0; c < lines.length; c++) {
+          var boty = y - size * 1.2 * (lines.length - c);
+          ctx.fillText(lines[c], x, boty);
+        }
+      } else if (baseline === 'middle') {
+        for (var c = 0; c < lines.length; c++) {
+          var boty = y - size * 0.6 * (lines.length - c);
+          ctx.fillText(lines[c], x, boty);
+          y += size * 0.6;
+        }
+        ctx.fillText(line, x, y);
+      }
     }
 
     var dimensions = currentAlign.split('x');
@@ -255,7 +275,24 @@ var renderCanvas = function() {
     drawtext($speaker.val(), $sourceSize.val(), qWidth, canvas.height - 70, currentFont, 'middle', 1000, 'start');
 };
 
-
+/*if (baseline === 'bottom') {
+  lines.push(line);
+  console.log(lines.length);
+  for (var c = 0; c < lines.length; c++) {
+    var boty = y - size * 1.2 * (lines.length - c);
+    ctx.fillText(lines[c], x, boty);
+    console.log(lines[c]);
+    line = words[n] + ' ';
+  }
+} else {
+  ctx.fillText(line, x, y);
+  line = words[n] + ' ';
+  y += size * 1.2;
+}
+} else {
+line = testLine;
+ctx.fillText(line, x, y);
+}*/
 
 
 
